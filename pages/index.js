@@ -11,25 +11,37 @@ export default function Home() {
       const Loader = (await import('../scenes/Loader')).default;
       const MainMenu = (await import('../scenes/MainMenu')).default;
 
-      const phaserGame = new Phaser.Game({
-        type: Phaser.AUTO,
-        title: "project-c",
-        width: window.innerWidth * 2,
-        height: window.innerHeight * 2,
-        parent: "gameWindow",
-        scene: [Loader, MainMenu],
-        scale: {
-          // fullscreenTarget: 'gameWindow',
-          parent: Phaser.Scale.PARENT,
-          zoom: 0.5,
-        },
-        physics: {
-          arcade: {
-            gravity: { y: 0 },
+      const createGameConfig = () => {
+        return {
+          type: Phaser.CANVAS,
+          title: "project-c",
+          width: window.innerWidth * window.devicePixelRatio * 2,
+          height: window.innerHeight * window.devicePixelRatio * 2,
+          parent: "gameWindow",
+          scene: [Loader, MainMenu],
+          scale: {
+            fullscreenTarget: 'gameWindow',
+            // parent: Phaser.Scale.PARENT,
+            zoom: 0.5,
           },
-          default: 'arcade',
+          fit: {
+            mode: Phaser.Scale.FIT,
+          },
+          physics: {
+            arcade: {
+              gravity: { y: 0 },
+            },
+            default: 'arcade',
+          },
+          fps: {
+            target: 30,
+            forceSetTimeOut: true,
+            
+          }
         }
-      });
+      }
+
+      const phaserGame = new Phaser.Game(createGameConfig());
       console.log(phaserGame.scene.isActive(Loader));
       window.game = phaserGame;
       console.log(phaserGame.getFrame())

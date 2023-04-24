@@ -14,7 +14,8 @@ export default class Loader extends Scene {
         this.load.image('slime', 'assets/slime.png');
     }
     create() {
-        this.add.text(window.innerHeight, window.innerWidth, "loading", { fontSize: '64px', fill: '#fff' });
+        let { width, height } = this.sys.game.canvas;
+        this.add.text(width/2, height/2, "loading", { fontSize: '64px', fill: '#fff' });
         // this.slime = this.add.image(300, 300, 'slime');
         this.slime = this.physics.add.image(300, 300, "slime");
         this.keyControls = this.input.keyboard.createCursorKeys();
@@ -26,7 +27,12 @@ export default class Loader extends Scene {
         // }, 10000)
 
         // Make the asset "slime" jump and move around
-        this.movementManager()
+        this.movementManager();
+        (function() {
+            const gameId = document.getElementById("gameWindow"); // Target div that wraps the phaser game
+            gameId.style.width = '100%'; // set width to 100%
+            gameId.style.height = '100%'; // set height to 100%
+        })(); 
     }
 
     movementManager() {
