@@ -1,0 +1,9 @@
+.game-wrapper {
+    width: 100%;
+    position: relative;
+    background-color: red;
+}
+
+#gameWindow {
+    margin: auto;
+}
