@@ -1,5 +1,4 @@
 import { Scene } from 'phaser';
-
 export default class Loader extends Scene {
     constructor() {
         console.log("Hi from Constructor");
@@ -15,6 +14,9 @@ export default class Loader extends Scene {
         this.add.text(100, 100, "loading");
     }
     update() {
-        //loop
+        // load next scene after 10 secs
+        setTimeout(() => {
+            this.scene.start('main-menu-scene');
+        }, 10000)
     }
 }

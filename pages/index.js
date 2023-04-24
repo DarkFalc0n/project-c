@@ -8,8 +8,8 @@ export default function Home() {
   useEffect(() => {
     async function initPhaser() {
       const Phaser = await import('phaser');
-      const Loader = await import('../scenes/Loader');
-      const MainMenu = await import('../scenes/MainMenu');
+      const Loader = (await import('../scenes/Loader')).default;
+      const MainMenu = (await import('../scenes/MainMenu')).default;
 
       const phaserGame = new Phaser.Game({
         type: Phaser.AUTO,
@@ -18,15 +18,14 @@ export default function Home() {
         height: 450,
         zoom: 1,
         parent: "gameWindow",
-        scene: [Loader],
+        scene: [Loader, MainMenu],
         scale: {
           autoCenter: Phaser.Scale.CENTER_BOTH
         }
       });
-      console.log(phaserGame.scene.getScenes(true));
-      console.log(phaserGame.scene.scenes);
       console.log(phaserGame.scene.isActive(Loader));
       window.game = phaserGame;
+      console.log(phaserGame.getFrame())
       window.sizeChanged = () => {
         if (window.game.isBooted) {
           setTimeout(() => {
@@ -38,8 +37,8 @@ export default function Home() {
         }
       };
       window.onresize = () => window.sizeChanged();
-      // Render Loader scene
-      window.game.scene.start(Loader);
+      // Start the game
+      // phaserGame.scene.start(Loader);
     }
     initPhaser();
   }, [])
