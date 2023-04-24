@@ -8,9 +8,9 @@ export default class MainMenu extends Phaser.Scene {
 
     }
     create() {
-        this.add.text(100, 100, "Hi Player !!");
+        this.add.text(100, 100, "Hi Player !!", { fontSize: '64px', fill: '#fff' });
     }
     update() {
-
+        
     }
 }

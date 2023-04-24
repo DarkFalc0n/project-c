@@ -14,13 +14,20 @@ export default function Home() {
       const phaserGame = new Phaser.Game({
         type: Phaser.AUTO,
         title: "project-c",
-        width: 800,
-        height: 450,
-        zoom: 1,
+        width: window.innerWidth * 2,
+        height: window.innerHeight * 2,
         parent: "gameWindow",
         scene: [Loader, MainMenu],
         scale: {
-          autoCenter: Phaser.Scale.CENTER_BOTH
+          // fullscreenTarget: 'gameWindow',
+          parent: Phaser.Scale.PARENT,
+          zoom: 0.5,
+        },
+        physics: {
+          arcade: {
+            gravity: { y: 0 },
+          },
+          default: 'arcade',
         }
       });
       console.log(phaserGame.scene.isActive(Loader));
@@ -38,7 +45,7 @@ export default function Home() {
       };
       window.onresize = () => window.sizeChanged();
       // Start the game
-      // phaserGame.scene.start(Loader);
+      phaserGame.scene.start(Loader);
     }
     initPhaser();
   }, [])
