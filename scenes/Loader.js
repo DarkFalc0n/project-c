@@ -2,61 +2,83 @@ import { Scene } from 'phaser';
 
 export default class Loader extends Scene {
     constructor() {
-        console.log("Hi from Constructor");
         super('loading-scene');
     }
     init() {
         console.log("hello")
-        this.custom = {}
     }
     preload() {
-        console.log("Hi from Preload");
         this.load.image('slime', 'assets/slime.png');
     }
     create() {
-        this.add.text(window.innerHeight, window.innerWidth, "loading", { fontSize: '64px', fill: '#fff' });
-        // this.slime = this.add.image(300, 300, 'slime');
-        this.slime = this.physics.add.image(300, 300, "slime");
+        //setting up key names
         this.keyControls = this.input.keyboard.createCursorKeys();
+        this.upKey = this.keyControls.up;
+        this.leftKey = this.keyControls.left;
+        this.rightKey = this.keyControls.right;
+        this.downKey = this.keyControls.down;
+        //-------------------------------------
+
+        //other variables
+        this.scx = window.innerWidth; //screen center x
+        this.scy = window.innerHeight;
+        //--------------------------------
+
+        this.add.text(
+            this.scx,
+            this.scy,
+            "Loading",
+            {
+                fontFamily: 'Roboto Mono',
+                fontSize: '64px',
+                fontStyle: 'bold',
+                fill: '#fff'
+            }
+        ).setOrigin(0.5);
+        // this.slime = this.physics.add.image(300, 300, "slime");
+
+
     }
     update() {
-        // load next scene after 10 secs
-        // setTimeout(() => {
-        //     this.scene.start('main-menu-scene');
-        // }, 10000)
-
-        // Make the asset "slime" jump and move around
-        this.movementManager()
+        // this.movementManager()
     }
 
     movementManager() {
-        if (this.keyControls.space.isDown === true) {
-            this.move();
-        }
-        if (this.keyControls.left.isDown === true && this.keyControls.right.isDown === true) {
-            this.stop();
-            return;
-        }
-        if (this.keyControls.left.isUp === true) {
+        //stopping conditions
+        if ((this.leftKey.isDown && this.rightKey.isDown) || (this.upKey.isDown && this.downKey.isDown)) {
             this.stop();
         }
-        if (this.keyControls.right.isUp === true) {
+        if (this.leftKey.isUp || this.rightKey.isUp || this.upKey.isUp || this.downKey.isUp) {
             this.stop();
         }
-        if (this.keyControls.left.isDown === true) {
-            this.move(-1);
-            return;
+        //---------------------
+
+        var dir = {
+            x: 0,
+            y: 0
+        };
+
+        //movement
+        if (this.leftKey.isDown === true) {
+            dir.x = -1;
         }
-        if (this.keyControls.right.isDown === true) {
-            this.move(1);
-            return;
+        else if (this.rightKey.isDown === true) {
+            dir.x = 1;
         }
+        if (this.upKey.isDown === true) {
+            dir.y = -1;
+        }
+        else if (this.downKey.isDown === true) {
+            dir.y = 1;
+        }
+        this.move(dir);
+        //-------------------
     }
     stop() {
-            this.slime.setVelocity(0, 0);
+        this.slime.setVelocity(0, 0);
     }
     move(dir) {  //dir is the direction of movement
-            const velocity = 300; //how fast can you control the base
-            this.slime.setVelocity(dir * velocity, 0);
+        const velocity = 300;
+        this.slime.setVelocity(dir.x * velocity, dir.y * velocity);
     }
 }
