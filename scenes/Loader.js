@@ -2,67 +2,115 @@ import { Scene } from 'phaser';
 
 export default class Loader extends Scene {
     constructor() {
-        console.log("Hi from Constructor");
-        super('loading-scene');
+        super("Loader");
     }
     init() {
-        console.log("hello")
-        this.custom = {}
     }
     preload() {
-        console.log("Hi from Preload");
+        //loading assets for scenes
         this.load.image('slime', 'assets/slime.png');
+        //-------------------------
+
+        //creating variables
+        this.scx = window.innerWidth; //screen center x
+        this.scy = window.innerHeight;
+        //--------------------------------
+
+        this.loadingText = this.add.text(
+            this.scx,
+            this.scy - 100,
+            "Loading",
+            {
+                fontFamily: 'Courier New',
+                fontSize: '64px',
+                fontStyle: 'bold',
+                fill: '#fff'
+            }
+        ).setOrigin(0.5);
+
+        this.add.rectangle(
+            this.scx,
+            this.scy,
+            1200,
+            50,
+            0
+        ).setStrokeStyle(10, 0xFFFFFF);
+
+        this.loadingBar = this.add.rectangle(
+            this.scx - 1170 / 2,
+            this.scy,
+            400,
+            20,
+            0xFFFFFF
+        ).setOrigin(0, 0.5)
+        // this.slime = this.physics.add.image(300, 300, "slime");
+
+        this.load.on("progress", (percent) => {
+            this.loadingBar.width = (1170 * percent);
+            this.loadingText.text = 'Loading ' + (percent * 100) + '%';
+        })
+
+        this.load.on("complete", () => {
+            setTimeout(() => {
+                this.scene.start("MainMenu")
+            }, 1000);
+        });
+
+        this.load.on("load", (file) => {
+            console.log(file.src)
+        })
+
     }
     create() {
-        let { width, height } = this.sys.game.canvas;
-        this.add.text(width/2, height/2, "loading", { fontSize: '64px', fill: '#fff' });
-        // this.slime = this.add.image(300, 300, 'slime');
-        this.slime = this.physics.add.image(300, 300, "slime");
+        //setting up key names
         this.keyControls = this.input.keyboard.createCursorKeys();
+        this.upKey = this.keyControls.up;
+        this.leftKey = this.keyControls.left;
+        this.rightKey = this.keyControls.right;
+        this.downKey = this.keyControls.down;
+        //-------------------------------------
+
+
     }
     update() {
-        // load next scene after 10 secs
-        // setTimeout(() => {
-        //     this.scene.start('main-menu-scene');
-        // }, 10000)
-
-        // Make the asset "slime" jump and move around
-        this.movementManager();
-        (function() {
-            const gameId = document.getElementById("gameWindow"); // Target div that wraps the phaser game
-            gameId.style.width = '100%'; // set width to 100%
-            gameId.style.height = '100%'; // set height to 100%
-        })(); 
     }
 
-    movementManager() {
-        if (this.keyControls.space.isDown === true) {
-            this.move();
-        }
-        if (this.keyControls.left.isDown === true && this.keyControls.right.isDown === true) {
-            this.stop();
-            return;
-        }
-        if (this.keyControls.left.isUp === true) {
-            this.stop();
-        }
-        if (this.keyControls.right.isUp === true) {
-            this.stop();
-        }
-        if (this.keyControls.left.isDown === true) {
-            this.move(-1);
-            return;
-        }
-        if (this.keyControls.right.isDown === true) {
-            this.move(1);
-            return;
-        }
-    }
-    stop() {
-            this.slime.setVelocity(0, 0);
-    }
-    move(dir) {  //dir is the direction of movement
-            const velocity = 300; //how fast can you control the base
-            this.slime.setVelocity(dir * velocity, 0);
-    }
+    // movementManager() {
+    //     //stopping conditions
+    //     if ((this.leftKey.isDown && this.rightKey.isDown) || (this.upKey.isDown && this.downKey.isDown)) {
+    //         this.stop();
+    //     }
+    //     if (this.leftKey.isUp || this.rightKey.isUp || this.upKey.isUp || this.downKey.isUp) {
+    //         this.stop();
+    //     }
+    //     //---------------------
+
+    //     var dir = {
+    //         x: 0,
+    //         y: 0
+    //     };
+
+    //     //movement
+    //     if (this.leftKey.isDown === true) {
+    //         dir.x = -1;
+    //     }
+    //     else if (this.rightKey.isDown === true) {
+    //         dir.x = 1;
+    //     }
+    //     if (this.upKey.isDown === true) {
+    //         dir.y = -1;
+    //     }
+    //     else if (this.downKey.isDown === true) {
+    //         dir.y = 1;
+    //     }
+    //     this.move(dir);
+    //     //-------------------
+    // }
+    // stop() {
+    //     this.slime.setVelocity(0, 0);
+    // }
+    // move(dir) {  //dir is the direction of movement
+    //     const velocity = 300;
+    //     this.slime.setVelocity(dir.x * velocity, dir.y * velocity);
+    // }
 }
