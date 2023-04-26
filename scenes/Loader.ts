@@ -1,6 +1,6 @@
-import { Scene } from 'phaser';
+import { CustomScene } from '@/types';
 
-export default class Loader extends Scene {
+export default class Loader extends CustomScene {
     constructor() {
         super("Loader");
     }
@@ -24,7 +24,7 @@ export default class Loader extends Scene {
                 fontFamily: 'Courier New',
                 fontSize: '64px',
                 fontStyle: 'bold',
-                fill: '#fff'
+                color: '#FFFFFF',
             }
         ).setOrigin(0.5);
 
@@ -45,7 +45,7 @@ export default class Loader extends Scene {
         ).setOrigin(0, 0.5)
         // this.slime = this.physics.add.image(300, 300, "slime");
 
-        this.load.on("progress", (percent) => {
+        this.load.on("progress", (percent: number) => {
             this.loadingBar.width = (1170 * percent);
             this.loadingText.text = 'Loading ' + (percent * 100) + '%';
         })
@@ -56,21 +56,19 @@ export default class Loader extends Scene {
             }, 1000);
         });
 
-        this.load.on("load", (file) => {
+        this.load.on("load", (file: Phaser.Loader.File) => {
             console.log(file.src)
         })
 
     }
     create() {
         //setting up key names
-        this.keyControls = this.input.keyboard.createCursorKeys();
+        this.keyControls = this.input.keyboard!.createCursorKeys();
         this.upKey = this.keyControls.up;
         this.leftKey = this.keyControls.left;
         this.rightKey = this.keyControls.right;
         this.downKey = this.keyControls.down;
         //-------------------------------------
-
-
     }
     update() {
     }

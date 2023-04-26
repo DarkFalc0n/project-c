@@ -1,3 +1,4 @@
+import React from 'react'
 import Head from 'next/head'
 import '../styles/Home.module.css'
 import { useEffect, useState } from 'react'
@@ -10,7 +11,6 @@ export default function Home() {
       const Loader = (await import('../scenes/Loader')).default;
       const MainMenu = (await import('../scenes/MainMenu')).default;
 
-
       const phaserGame = new Phaser.Game({
         type: Phaser.AUTO,
         title: "project-c",
@@ -19,7 +19,7 @@ export default function Home() {
         parent: "gameWindow",
         scene: [Loader, MainMenu],
         scale: {
-          parent: Phaser.Scale.RESIZE,
+          parent: "gameWindow",
           zoom: 0.5,
         },
         render: {
@@ -28,25 +28,10 @@ export default function Home() {
         physics: {
           arcade: {
             gravity: { y: 0 },
+            fps: 60,
           },
-          fit: {
-            mode: Phaser.Scale.FIT,
-          },
-          physics: {
-            arcade: {
-              gravity: { y: 0 },
-            },
-            default: 'arcade',
-          },
-          fps: {
-            target: 30,
-            forceSetTimeOut: true,
-            
-          }
         }
       });
-      console.log(phaserGame.scene.isActive(Loader));
-      window.game = phaserGame;
       console.log(phaserGame.getFrame());
     }
 
