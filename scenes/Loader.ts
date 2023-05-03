@@ -1,4 +1,4 @@
-import { CustomScene } from '@/types';
+import { CustomScene } from '@/types/index.d';
 
 export default class Loader extends CustomScene {
     constructor() {
