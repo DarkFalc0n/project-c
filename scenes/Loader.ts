@@ -62,12 +62,13 @@ export default class Loader extends CustomScene {
     }
     create() {
         // //setting up key names
+        if (this.input.keyboard)
+        {
         this.keyControls = this.input.keyboard.createCursorKeys();
         this.upKey = this.keyControls.up;
-        // this.leftKey = this.keyControls.left;
-        // this.rightKey = this.keyControls.right;
-        // this.downKey = this.keyControls.down;
-        // //-------------------------------------
+        this.leftKey = this.keyControls.left;
+        this.rightKey = this.keyControls.right;
+        this.downKey = this.keyControls.down;}
     }
     update() {
     }

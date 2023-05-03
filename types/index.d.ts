@@ -5,7 +5,7 @@ export class CustomScene extends Scene {
     scy: number;
     loadingText: Phaser.GameObjects.Text;
     loadingBar: Phaser.GameObjects.Rectangle;
-    keyControls: Phaser.Types.Input.Keyboard.CursorKeys;
+    keyControls: Phaser.Types.Input.Keyboard.CursorKeys | null;
     upKey: Phaser.Input.Keyboard.Key;
     leftKey: Phaser.Input.Keyboard.Key;
     rightKey: Phaser.Input.Keyboard.Key;
