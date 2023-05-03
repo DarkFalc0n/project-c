@@ -43,7 +43,6 @@ export default class Loader extends CustomScene {
             20,
             0xFFFFFF
         ).setOrigin(0, 0.5)
-        // this.slime = this.physics.add.image(300, 300, "slime");
 
         this.load.on("progress", (percent: number) => {
             this.loadingBar.width = (1170 * percent);
@@ -62,13 +61,13 @@ export default class Loader extends CustomScene {
 
     }
     create() {
-        //setting up key names
-        this.keyControls = this.input.keyboard!.createCursorKeys();
+        // //setting up key names
+        this.keyControls = this.input.keyboard.createCursorKeys();
         this.upKey = this.keyControls.up;
-        this.leftKey = this.keyControls.left;
-        this.rightKey = this.keyControls.right;
-        this.downKey = this.keyControls.down;
-        //-------------------------------------
+        // this.leftKey = this.keyControls.left;
+        // this.rightKey = this.keyControls.right;
+        // this.downKey = this.keyControls.down;
+        // //-------------------------------------
     }
     update() {
     }
