@@ -62,8 +62,8 @@ export default class Loader extends Scene {
     }
     create() {
         // //setting up key names
-        // this.keyControls = this.input.keyboard.createCursorKeys();
-        // this.upKey = this.keyControls.up;
+        this.keyControls = this.input.keyboard.createCursorKeys();
+        this.upKey = this.keyControls.up;
         // this.leftKey = this.keyControls.left;
         // this.rightKey = this.keyControls.right;
         // this.downKey = this.keyControls.down;
