@@ -1,6 +1,6 @@
-import { Scene } from 'phaser';
+import { CustomScene } from '@/types/index.d';
 
-export default class Loader extends Scene {
+export default class Loader extends CustomScene {
     constructor() {
         super("Loader");
     }
@@ -24,7 +24,7 @@ export default class Loader extends Scene {
                 fontFamily: 'Courier New',
                 fontSize: '64px',
                 fontStyle: 'bold',
-                fill: '#fff'
+                color: '#FFFFFF',
             }
         ).setOrigin(0.5);
 
@@ -44,7 +44,7 @@ export default class Loader extends Scene {
             0xFFFFFF
         ).setOrigin(0, 0.5)
 
-        this.load.on("progress", (percent) => {
+        this.load.on("progress", (percent: number) => {
             this.loadingBar.width = (1170 * percent);
             this.loadingText.text = 'Loading ' + (percent * 100) + '%';
         })
@@ -55,7 +55,7 @@ export default class Loader extends Scene {
             }, 1000);
         });
 
-        this.load.on("load", (file) => {
+        this.load.on("load", (file: Phaser.Loader.File) => {
             console.log(file.src)
         })
 
