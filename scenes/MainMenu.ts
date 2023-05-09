@@ -55,7 +55,7 @@ export default class MainMenu extends CustomScene {
             { fontFamily: 'Minecraftia', fontSize: '80px', fontStyle: 'bold' }
         ).setOrigin(0.5);
         setButtonHover(creditButton, creditButtonText);
-        let versionText: Phaser.GameObjects.Text = this.add.text(
+        this.add.text(
             window.innerWidth*2 - 30,
             window.innerHeight* 2 - 30,
             `v${version}`,
