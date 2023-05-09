@@ -40,6 +40,7 @@ export default function Home() {
 
   return (
     <div className="game-wrapper">
+      <div className='font-loader'>Font</div>
       <div id="gameWindow" key="gameWindow">
       </div>
     </div>

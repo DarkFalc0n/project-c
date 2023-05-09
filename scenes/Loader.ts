@@ -8,7 +8,9 @@ export default class Loader extends CustomScene {
     }
     preload() {
         //loading assets for scenes
-        this.load.image('slime', 'assets/slime.png');
+        this.load.image('slime', 'assets/sprites/slime.png');
+        this.load.spritesheet('buttonui', 'assets/sprites/button.png', { frameHeight: 16, frameWidth: 16 });
+        this.load.audio('buttonhoversound', 'assets/sounds/buttonhover.mp3');
         //-------------------------
 
         //creating variables
@@ -21,7 +23,7 @@ export default class Loader extends CustomScene {
             this.scy - 100,
             "Loading",
             {
-                fontFamily: 'Courier New',
+                fontFamily: 'Minecraftia',
                 fontSize: '64px',
                 fontStyle: 'bold',
                 color: '#FFFFFF',
@@ -34,14 +36,14 @@ export default class Loader extends CustomScene {
             1200,
             50,
             0
-        ).setStrokeStyle(10, 0xFFFFFF);
+        ).setStrokeStyle(10, 0xFF0000);
 
         this.loadingBar = this.add.rectangle(
             this.scx - 1170 / 2,
             this.scy,
             400,
             20,
-            0xFFFFFF
+            0xFF0000
         ).setOrigin(0, 0.5)
 
         this.load.on("progress", (percent: number) => {
@@ -50,13 +52,19 @@ export default class Loader extends CustomScene {
         })
 
         this.load.on("complete", () => {
-            setTimeout(() => {
-                this.scene.start("MainMenu")
-            }, 1000);
+            this.add.text(this.scx,
+                this.scy + 200,
+                'Click to start',
+                { fontFamily: "Minecraftia", fontSize: 48 }
+            ).setOrigin(0.5);
+            this.input.on('pointerdown', () => {
+                setTimeout(() => {
+                    this.scene.start("MainMenu")
+                }, 100);
+            });
         });
 
         this.load.on("load", (file: Phaser.Loader.File) => {
-            console.log(file.src)
         })
 
     }
@@ -68,7 +76,8 @@ export default class Loader extends CustomScene {
         this.upKey = this.keyControls.up;
         this.leftKey = this.keyControls.left;
         this.rightKey = this.keyControls.right;
-        this.downKey = this.keyControls.down;}
+            this.downKey = this.keyControls.down;
+        }
     }
     update() {
     }
